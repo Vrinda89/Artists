@@ -9,12 +9,15 @@ class CustomCardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
       color: Colors.black,
       child: InkWell(
         splashColor: Colors.blue.withAlpha(30),
         onTap: () {},
         child: SizedBox(
-          height: 150.0,
+          height: 180.0,
           width: MediaQuery.of(context).size.width - 20,
           child: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -29,21 +32,5 @@ class CustomCardView extends StatelessWidget {
         ),
       ),
     );
-    // return Card(
-    //   color: Colors.black,
-    //   child: SizedBox(
-    //     height: 100.0,
-    //     width: MediaQuery.of(context).size.width - 20,
-    //     child: Padding(
-    //         padding: const EdgeInsets.all(20.0),
-    //         child: Center(
-    //           child: TypeFacedText(
-    //             title: title,
-    //             color: Colors.white,
-    //             textAlign: TextAlign.center,
-    //           ),
-    //         )),
-    //   ),
-    // );
   }
 }

@@ -1,25 +1,24 @@
-import 'package:albums/resources/palette.dart';
 import 'package:flutter/material.dart';
 
 import '../../font_type.dart';
 
 class AppTextStyle {
-  static const String fontRegular = "DroidSerif-Regular";
-  static const String fontBold = "DroidSerif-Bold";
-  static const String fontItalic = "DroidSerif-Italic.ttf";
+  static const String _fontRegular = "DroidSerif-Regular";
+  static const String _fontBold = "DroidSerif-Bold";
+  static const String _fontItalic = "DroidSerif-Italic.ttf";
 
   static const textTitle = 20.0;
   static const textRegularTitle = 15.0;
 
   static String _getFont(FontType fontType) {
     if (fontType == FontType.regular) {
-      return fontRegular;
+      return _fontRegular;
     } else if (fontType == FontType.bold) {
-      return fontBold;
+      return _fontBold;
     } else if (fontType == FontType.bold) {
-      return fontItalic;
+      return _fontItalic;
     }
-    return fontRegular;
+    return _fontRegular;
   }
 
   static TextStyle getAppTextStyle(

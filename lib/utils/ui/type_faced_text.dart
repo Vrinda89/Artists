@@ -13,7 +13,7 @@ class TypeFacedText extends StatelessWidget {
 
   const TypeFacedText(
       {Key? key,
-      this.title = "demo",
+      this.title = "no text",
       this.color = Colors.black,
       this.isWithUnderline = false,
       this.fontType = FontType.regular,

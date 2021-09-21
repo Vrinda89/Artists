@@ -1,3 +1,1 @@
-enum FontType{
-  regular,bold,italic
-}
+enum FontType { regular, bold, italic }

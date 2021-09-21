@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(25.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
             UiHelper.verticalSpaceLarge,
             CustomCardView(title: 'Discover an Album'),
             UiHelper.verticalSpaceMedium,
-            CustomCardView(title: 'Discover a post'),
+            CustomCardView(title: 'Discover a Post'),
           ],
         ),
       ),
