@@ -68,16 +68,37 @@ class _AlbumScreenState extends BaseState<AlbumsScreen> {
   }
 
   Widget _getBaseWidget() {
+    return Stack(
+      children: [
+        StreamBuilder(
+          stream: bloc?.getAlbums,
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            var data = snapshot.data;
+            if (data != null && data is List<Album>) {
+              List<Album> list = data;
+              return list.isNotEmpty
+                  ? _getAlbumsList(list)
+                  : _getNoDataWidget();
+            } else {
+              return const SizedBox();
+            }
+          },
+        ),
+        Center(
+          child: _getLoader(),
+        )
+      ],
+    );
+  }
+
+  Widget _getLoader() {
     return StreamBuilder(
-      stream: bloc?.getAlbums,
+      stream: bloc?.loaderStream,
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         var data = snapshot.data;
-        if (data != null && data is List<Album>) {
-          List<Album> list = data;
-          return list.isNotEmpty ? _getAlbumsList(list) : _getNoDataWidget();
-        } else {
-          return _getNoDataWidget();
-        }
+        return Visibility(
+            visible: data != null ? data as bool : false,
+            child: const CircularProgressIndicator());
       },
     );
   }
@@ -101,15 +122,17 @@ class _AlbumScreenState extends BaseState<AlbumsScreen> {
   }
 
   Widget _getNoDataWidget() {
-    return const Padding(
-        padding: EdgeInsets.all(60),
-        child: TypeFacedText(
-          title: 'No albums available',
-          color: Colors.black,
-          textAlign: TextAlign.center,
-          textSize: 15.0,
-          fontType: FontType.italic,
-        ));
+    return const Center(
+      child: Padding(
+          padding: EdgeInsets.all(60),
+          child: TypeFacedText(
+            title: 'No albums available',
+            color: Colors.black,
+            textAlign: TextAlign.center,
+            textSize: 15.0,
+            fontType: FontType.italic,
+          )),
+    );
   }
 
   @override
@@ -121,6 +144,5 @@ class _AlbumScreenState extends BaseState<AlbumsScreen> {
   Future<void> _captureImage() async {
     final ImagePicker _picker = ImagePicker();
     final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
-
   }
 }

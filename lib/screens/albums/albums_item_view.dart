@@ -17,7 +17,7 @@ class AlbumsItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     double cardWidth = padding != null
         ? MediaQuery.of(context).size.width - padding!
-        : MediaQuery.of(context).size.width - 20;
+        : MediaQuery.of(context).size.width - 10;
     return SizedBox(
       width: cardWidth / 2,
       child: CustomCardView(
@@ -46,10 +46,10 @@ class AlbumsItemView extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(bottom: 8.0,left:3,right: 3),
                 child: TypeFacedText(
                   color: Colors.white,
-                  title: title?.toUpperCase() ?? 'na',
+                  title: title?? 'na',
                   textAlign: TextAlign.center,
                   textSize: 12.0,
                 ),
