@@ -3,6 +3,7 @@ import 'package:albums/utils/ui/ui_helper.dart';
 import 'package:flutter/material.dart';
 
 import 'card_view.dart';
+import 'home_menu.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.title}) : super(key: key);
@@ -36,9 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
               textSize: 30.0,
             ),
             UiHelper.verticalSpaceLarge,
-            CustomCardView(title: 'Discover an Album'),
+            CustomCardView(body: HomeMenu(title: 'Discover an Album')),
             UiHelper.verticalSpaceMedium,
-            CustomCardView(title: 'Discover a Post'),
+            CustomCardView(body: HomeMenu(title: 'Discover a Post')),
           ],
         ),
       ),
