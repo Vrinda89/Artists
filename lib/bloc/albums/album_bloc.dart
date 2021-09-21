@@ -1,6 +1,6 @@
 import 'package:albums/bloc/base_bloc.dart';
 import 'package:albums/model/albums.dart';
-import 'package:albums/repository/albums_repository.dart';
+import 'package:albums/repository/data_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AlbumBloc extends BaseBloc {

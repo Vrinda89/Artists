@@ -1,8 +1,8 @@
 import 'package:albums/bloc/post/posts_bloc.dart';
 import 'package:albums/font_type.dart';
-import 'package:albums/model/albums.dart';
-import 'package:albums/screens/albums/albums_item_view.dart';
-import 'package:albums/screens/home/card_view.dart';
+import 'package:albums/model/comments.dart';
+import 'package:albums/model/posts.dart';
+import 'package:albums/resources/palette.dart';
 import 'package:albums/utils/ui/base_state.dart';
 import 'package:albums/utils/ui/type_faced_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../bloc/bloc_provider.dart';
-
 
 class PostScreen extends StatefulWidget {
   static const routeName = '/posts';
@@ -28,7 +27,7 @@ class _PostsScreenState extends BaseState<PostScreen> {
   void initState() {
     super.initState();
     bloc = PostsBloc();
-    bloc?.fetchAlbums();
+    bloc?.fetchPosts();
   }
 
   @override
@@ -73,9 +72,9 @@ class _PostsScreenState extends BaseState<PostScreen> {
       stream: bloc?.getPosts,
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         var data = snapshot.data;
-        if (data != null && data is List<Album>) {
-          List<Album> list = data;
-          return list.isNotEmpty ? _getAlbumsList(list) : _getNoDataWidget();
+        if (data != null && data is List<Posts>) {
+          List<Posts> list = data;
+          return list.isNotEmpty ? _getPostsList(list) : _getNoDataWidget();
         } else {
           return _getNoDataWidget();
         }
@@ -83,34 +82,75 @@ class _PostsScreenState extends BaseState<PostScreen> {
     );
   }
 
-  Widget _getAlbumsList(List<Album> albums) {
-    return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-        ),
-        itemCount: albums.length,
-        itemBuilder: (BuildContext ctx, index) {
-          return Container(
-              alignment: Alignment.center,
-              child: CustomCardView(
-                body: AlbumsItemView(
-                  title: albums[index].title,
-                  thumbNailUrl: albums[index].thumbnailUrl,
+  Widget _getPostsList(List<Posts> posts) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: posts.length,
+      itemBuilder: (context, index) {
+        return ExpansionTile(
+          onExpansionChanged: (value) {
+            if (value) {
+              bloc?.fetchComments(posts[index].id);
+            }
+          },
+          title: TypeFacedText(
+            fontType: FontType.bold,
+            title: posts[index].title,
+            color: Colors.black,
+            textSize: 16.0,
+          ),
+          children: <Widget>[
+            _getExpandedView(posts[index].id),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _getExpandedView(int id) {
+    return StreamBuilder(
+      stream: bloc?.getComments,
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        var data = snapshot.data;
+        if (data != null && data is List<Comments>) {
+          List<Comments> list = data;
+          return ListView.builder(
+            physics: const ClampingScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: TypeFacedText(
+                  title: list[index].body,
+                  color: Palette.primaryColor,
+                  fontType: FontType.bold,
+                  textSize: 14.0,
                 ),
-              ));
-        });
+                subtitle: const Divider(
+                  color: Colors.black54,
+                ),
+              );
+            },
+          );
+        } else {
+          return _getNoDataWidget();
+        }
+      },
+    );
   }
 
   Widget _getNoDataWidget() {
-    return const Padding(
-        padding: EdgeInsets.all(60),
-        child: TypeFacedText(
-          title: 'No albums available',
-          color: Colors.black,
-          textAlign: TextAlign.center,
-          textSize: 15.0,
-          fontType: FontType.italic,
-        ));
+    return const Center(
+      child: Padding(
+          padding: EdgeInsets.all(60),
+          child: TypeFacedText(
+            title: 'No posts available',
+            color: Colors.black,
+            textAlign: TextAlign.center,
+            textSize: 15.0,
+            fontType: FontType.italic,
+          )),
+    );
   }
 
   @override

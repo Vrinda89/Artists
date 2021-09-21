@@ -15,7 +15,7 @@ class AppTextStyle {
       return _fontRegular;
     } else if (fontType == FontType.bold) {
       return _fontBold;
-    } else if (fontType == FontType.bold) {
+    } else if (fontType == FontType.italic) {
       return _fontItalic;
     }
     return _fontRegular;

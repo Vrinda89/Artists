@@ -144,5 +144,7 @@ class _AlbumScreenState extends BaseState<AlbumsScreen> {
   Future<void> _captureImage() async {
     final ImagePicker _picker = ImagePicker();
     final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+    // ignore: avoid_print
+    print(photo!.path);
   }
 }
