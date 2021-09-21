@@ -42,7 +42,7 @@ class AlbumsItemView extends StatelessWidget {
                 ),
               ),
             ),
-            UiHelper.verticalSpaceSmall,
+            UiHelper.verticalSpaceSmallest,
             Expanded(
               flex: 2,
               child: Padding(

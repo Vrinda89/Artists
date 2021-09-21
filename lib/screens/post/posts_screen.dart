@@ -3,11 +3,13 @@ import 'package:albums/font_type.dart';
 import 'package:albums/model/comments.dart';
 import 'package:albums/model/posts.dart';
 import 'package:albums/resources/palette.dart';
+import 'package:albums/route/app_navigator.dart';
+import 'package:albums/route/app_router.dart';
+import 'package:albums/route/screens.dart';
 import 'package:albums/utils/ui/base_state.dart';
 import 'package:albums/utils/ui/type_faced_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../../bloc/bloc_provider.dart';
 
@@ -51,7 +53,10 @@ class _PostsScreenState extends BaseState<PostScreen> {
               padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  _captureImage();
+                  AppNavigator.navigateByPush(
+                      route: AppRouter().generateRoute(
+                          RouteSettings(name: Screens.comments.toString())),
+                      context: context);
                 },
                 child: const Icon(
                   Icons.add_circle,
@@ -157,12 +162,5 @@ class _PostsScreenState extends BaseState<PostScreen> {
   dispose() {
     bloc?.dispose();
     super.dispose();
-  }
-
-  Future<void> _captureImage() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
-    // ignore: avoid_print
-    print(photo!.path);
   }
 }
