@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CustomCardView extends StatelessWidget {
-  final String title;
-  final Widget ? body;
+  final Widget? body;
   final double cardPadding;
-  final VoidCallback ? onClick;
+  final VoidCallback? onClick;
 
-    const CustomCardView({
+  const CustomCardView({
     Key? key,
-    this.title = "albums",
-    this.body ,
+    this.body,
     this.cardPadding = 30.0,
     this.onClick,
   }) : super(key: key);

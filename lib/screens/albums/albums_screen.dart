@@ -1,10 +1,15 @@
 import 'package:albums/bloc/albums/album_bloc.dart';
+import 'package:albums/font_type.dart';
+import 'package:albums/model/albums.dart';
+import 'package:albums/screens/home/card_view.dart';
 import 'package:albums/utils/ui/base_state.dart';
 import 'package:albums/utils/ui/type_faced_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../bloc/bloc_provider.dart';
+import 'albums_item_view.dart';
 
 class AlbumsScreen extends StatefulWidget {
   static const routeName = '/albums';
@@ -16,6 +21,15 @@ class AlbumsScreen extends StatefulWidget {
 }
 
 class _AlbumScreenState extends BaseState<AlbumsScreen> {
+  AlbumBloc? bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    bloc = AlbumBloc();
+    bloc?.fetchAlbums();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AlbumBloc>(
@@ -36,7 +50,9 @@ class _AlbumScreenState extends BaseState<AlbumsScreen> {
             Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  _captureImage();
+                },
                 child: const Icon(
                   Icons.add_circle,
                   size: 26.0,
@@ -52,15 +68,59 @@ class _AlbumScreenState extends BaseState<AlbumsScreen> {
   }
 
   Widget _getBaseWidget() {
-    return Container(
-      alignment: Alignment.center,
-      child: Center(
-        child: Column(
-          children: [
-            Container(),
-          ],
-        ),
-      ),
+    return StreamBuilder(
+      stream: bloc?.getAlbums,
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        var data = snapshot.data;
+        if (data != null && data is List<Album>) {
+          List<Album> list = data;
+          return list.isNotEmpty ? _getAlbumsList(list) : _getNoDataWidget();
+        } else {
+          return _getNoDataWidget();
+        }
+      },
     );
+  }
+
+  Widget _getAlbumsList(List<Album> albums) {
+    return GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+        ),
+        itemCount: albums.length,
+        itemBuilder: (BuildContext ctx, index) {
+          return Container(
+              alignment: Alignment.center,
+              child: CustomCardView(
+                body: AlbumsItemView(
+                  title: albums[index].title,
+                  thumbNailUrl: albums[index].thumbnailUrl,
+                ),
+              ));
+        });
+  }
+
+  Widget _getNoDataWidget() {
+    return const Padding(
+        padding: EdgeInsets.all(60),
+        child: TypeFacedText(
+          title: 'No albums available',
+          color: Colors.black,
+          textAlign: TextAlign.center,
+          textSize: 15.0,
+          fontType: FontType.italic,
+        ));
+  }
+
+  @override
+  dispose() {
+    bloc?.dispose();
+    super.dispose();
+  }
+
+  Future<void> _captureImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+
   }
 }

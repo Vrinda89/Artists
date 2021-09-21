@@ -1,3 +1,1 @@
-enum Screens {
-  home,albums,posts,undefined
-}
+enum Screens { home, albums, posts, undefined }

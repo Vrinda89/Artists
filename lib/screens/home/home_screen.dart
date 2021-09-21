@@ -46,9 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         UiHelper.verticalSpaceLarge,
         CustomCardView(
-          onClick: () => {
-          _navigateToAlbums()
-        },
+          onClick: () => {_navigateToAlbums()},
           body: const HomeMenu(title: 'Discover an Album'),
         ),
         UiHelper.verticalSpaceMedium,

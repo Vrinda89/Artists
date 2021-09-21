@@ -20,14 +20,14 @@ class AppRouter {
   }) {
     switch (screens) {
       case Screens.home:
-        return RouteGenerator().generateRoute(
-             HomeScreen(), HomeScreen.routeName, objectToPass);
+        return RouteGenerator()
+            .generateRoute(HomeScreen(), HomeScreen.routeName, objectToPass);
       case Screens.albums:
         return RouteGenerator().generateRoute(
-             const AlbumsScreen(), AlbumsScreen.routeName, objectToPass);
+            const AlbumsScreen(), AlbumsScreen.routeName, objectToPass);
       case Screens.posts:
         return RouteGenerator().generateRoute(
-             const AlbumsScreen(), AlbumsScreen.routeName, objectToPass);
+            const AlbumsScreen(), AlbumsScreen.routeName, objectToPass);
       default:
         return RouteGenerator()
             .generateRoute(getUndefinedRoute(), "/undefined", objectToPass);

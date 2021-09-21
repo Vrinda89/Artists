@@ -7,10 +7,10 @@ abstract class BaseState<T extends StatefulWidget> extends State
     WidgetsBinding.instance?.addObserver(this);
     super.initState();
   }
+
   @override
   void dispose() {
     WidgetsBinding.instance?.removeObserver(this);
     super.dispose();
   }
-
 }
