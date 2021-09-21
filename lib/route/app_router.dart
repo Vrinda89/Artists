@@ -1,6 +1,7 @@
 import 'package:albums/route/screens.dart';
 import 'package:albums/screens/albums/albums_screen.dart';
 import 'package:albums/screens/home/home_screen.dart';
+import 'package:albums/screens/post/posts_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'route_generator.dart';
@@ -21,13 +22,13 @@ class AppRouter {
     switch (screens) {
       case Screens.home:
         return RouteGenerator()
-            .generateRoute(HomeScreen(), HomeScreen.routeName, objectToPass);
+            .generateRoute(const HomeScreen(), HomeScreen.routeName, objectToPass);
       case Screens.albums:
         return RouteGenerator().generateRoute(
             const AlbumsScreen(), AlbumsScreen.routeName, objectToPass);
       case Screens.posts:
         return RouteGenerator().generateRoute(
-            const AlbumsScreen(), AlbumsScreen.routeName, objectToPass);
+            const PostScreen(), AlbumsScreen.routeName, objectToPass);
       default:
         return RouteGenerator()
             .generateRoute(getUndefinedRoute(), "/undefined", objectToPass);

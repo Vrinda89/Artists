@@ -46,19 +46,24 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         UiHelper.verticalSpaceLarge,
         CustomCardView(
-          onClick: () => {_navigateToAlbums()},
+          onClick: () => {_navigateToNextScreen(Screens.albums)},
           body: const HomeMenu(title: 'Discover an Album'),
         ),
+
         UiHelper.verticalSpaceMedium,
-        const CustomCardView(body: HomeMenu(title: 'Discover a Post')),
+        CustomCardView(
+          onClick: () => {_navigateToNextScreen(Screens.posts)},
+          body: const HomeMenu(title: 'Discover a Post'),
+        ),
       ],
     );
   }
 
-  void _navigateToAlbums() {
+  void _navigateToNextScreen(Screens screens) {
     AppNavigator.navigateByPush(
         route: AppRouter()
-            .generateRoute(RouteSettings(name: Screens.albums.toString())),
+            .generateRoute(RouteSettings(name: screens.toString())),
         context: context);
   }
+
 }
