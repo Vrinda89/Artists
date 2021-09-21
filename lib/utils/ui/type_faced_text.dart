@@ -11,7 +11,7 @@ class TypeFacedText extends StatelessWidget {
   final TextAlign textAlign;
   final double textSize;
 
-  const TypeFacedText(
+   const TypeFacedText(
       {Key? key,
       this.title = "no text",
       this.color = Colors.black,

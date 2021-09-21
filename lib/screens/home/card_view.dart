@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 
 class CustomCardView extends StatelessWidget {
   final String title;
-  final Widget body;
+  final Widget ? body;
   final double cardPadding;
+  final VoidCallback ? onClick;
 
-  const CustomCardView(
-      {Key? key,
-      this.title = "albums",
-      this.body = const SizedBox(),
-      this.cardPadding = 30.0})
-      : super(key: key);
+    const CustomCardView({
+    Key? key,
+    this.title = "albums",
+    this.body ,
+    this.cardPadding = 30.0,
+    this.onClick,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,11 @@ class CustomCardView extends StatelessWidget {
       ),
       color: Colors.black,
       child: InkWell(
-          splashColor: Colors.blue.withAlpha(30), onTap: () {}, child: body),
+          splashColor: Colors.blue.withAlpha(30),
+          onTap: () {
+            onClick?.call();
+          },
+          child: body ?? Container()),
     );
   }
 }
