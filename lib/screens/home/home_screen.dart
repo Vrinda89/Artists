@@ -28,34 +28,36 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _getBaseContainer() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        const TypeFacedText(
-          title: 'Welcome to the app',
-          textSize: 50.0,
-          textAlign: TextAlign.center,
-          color: Colors.black,
-        ),
-        UiHelper.verticalSpaceMedium,
-        const TypeFacedText(
-          textAlign: TextAlign.center,
-          title: 'Press a button to get started',
-          textSize: 30.0,
-        ),
-        UiHelper.verticalSpaceLarge,
-        CustomCardView(
-          onClick: () => {_navigateToNextScreen(Screens.albums)},
-          body: const HomeMenu(title: 'Discover an Album'),
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          const TypeFacedText(
+            title: 'Welcome to the app',
+            textSize: 50.0,
+            textAlign: TextAlign.center,
+            color: Colors.black,
+          ),
+          UiHelper.verticalSpaceMedium,
+          const TypeFacedText(
+            textAlign: TextAlign.center,
+            title: 'Press a button to get started',
+            textSize: 30.0,
+          ),
+          UiHelper.verticalSpaceLarge,
+          CustomCardView(
+            onClick: () => {_navigateToNextScreen(Screens.albums)},
+            body: const HomeMenu(title: 'Discover an Album'),
+          ),
 
-        UiHelper.verticalSpaceMedium,
-        CustomCardView(
-          onClick: () => {_navigateToNextScreen(Screens.posts)},
-          body: const HomeMenu(title: 'Discover a Post'),
-        ),
-      ],
+          UiHelper.verticalSpaceMedium,
+          CustomCardView(
+            onClick: () => {_navigateToNextScreen(Screens.posts)},
+            body: const HomeMenu(title: 'Discover a Post'),
+          ),
+        ],
+      ),
     );
   }
 

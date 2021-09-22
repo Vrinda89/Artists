@@ -73,17 +73,24 @@ class _PostsScreenState extends BaseState<PostScreen> {
   }
 
   Widget _getBaseWidget() {
-    return StreamBuilder(
-      stream: bloc?.getPosts,
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        var data = snapshot.data;
-        if (data != null && data is List<Posts>) {
-          List<Posts> list = data;
-          return list.isNotEmpty ? _getPostsList(list) : _getNoDataWidget();
-        } else {
-          return _getNoDataWidget();
-        }
-      },
+    return Stack(
+      children: [
+        StreamBuilder(
+          stream: bloc?.getPosts,
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            var data = snapshot.data;
+            if (data != null && data is List<Posts>) {
+              List<Posts> list = data;
+              return list.isNotEmpty ? _getPostsList(list) : _getNoDataWidget();
+            } else {
+              return _getNoDataWidget();
+            }
+          },
+        ),
+        Center(
+          child: _getLoader(),
+        )
+      ],
     );
   }
 
@@ -155,6 +162,18 @@ class _PostsScreenState extends BaseState<PostScreen> {
             textSize: 15.0,
             fontType: FontType.italic,
           )),
+    );
+  }
+
+  Widget _getLoader() {
+    return StreamBuilder(
+      stream: bloc?.loaderStream,
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        var data = snapshot.data;
+        return Visibility(
+            visible: data != null ? data as bool : false,
+            child: const CircularProgressIndicator());
+      },
     );
   }
 
